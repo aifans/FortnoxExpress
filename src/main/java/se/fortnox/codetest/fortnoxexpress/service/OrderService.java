@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import org.springframework.util.StringUtils;
 import se.fortnox.codetest.fortnoxexpress.exception.BizException;
 import se.fortnox.codetest.fortnoxexpress.exception.ErrorEnum;
 import se.fortnox.codetest.fortnoxexpress.model.Order;
@@ -65,6 +66,10 @@ public class OrderService implements IOrderService {
     }
 
     private void validateColor(String colorHEXString) {
+        if (!StringUtils.hasText(colorHEXString)) {
+            throw new BizException(ErrorEnum.INVALID_ORDER_COLOR_EXIST);
+        }
+
         Color color;
 
         try {

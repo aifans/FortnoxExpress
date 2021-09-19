@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.util.ReflectionTestUtils;
 import se.fortnox.codetest.fortnoxexpress.controller.OrderController;
 import se.fortnox.codetest.fortnoxexpress.dao.IOrderDAO;
 import se.fortnox.codetest.fortnoxexpress.exception.BizException;
@@ -92,65 +93,44 @@ class OrderServiceTest {
     @Test
     void validateColor_blue() {
         try {
-            Class<?> clazz = Class.forName(OrderService.class.getName());
-            //OrderService orderServiceReflect = (OrderService) clazz.newInstance();
-            Method validateColorMethod = clazz.getDeclaredMethod("validateColor", String.class);
-            validateColorMethod.setAccessible(true);
+            ReflectionTestUtils.invokeMethod(orderService, "validateColor", "#000001");
+        } catch (BizException bizException) {
+            Assertions.assertEquals("60004", bizException.getCode());
+        }
 
-            try {
-                validateColorMethod.invoke(orderService, "#000001");
-            } catch (BizException bizException) {
-                Assertions.assertEquals("60004", bizException.getCode());
-            }
-        } catch (Exception e) {}
     }
 
     @Test
-    void validateColor_exsit() throws Exception {
+    void validateColor_exsit() {
         try {
-            Class<?> clazz = Class.forName(OrderService.class.getName());
-            Method validateColorMethod = clazz.getDeclaredMethod("validateColor", String.class);
-            validateColorMethod.setAccessible(true);
+            ReflectionTestUtils.invokeMethod(orderService, "validateColor", "");
+        } catch (BizException bizException) {
+            Assertions.assertEquals("60007", bizException.getCode());
+        }
 
-            try {
-                validateColorMethod.invoke(orderService, "");
-            } catch (BizException bizException) {
-                Assertions.assertEquals("60007", bizException.getCode());
-            }
-        } catch (Exception e) {}
     }
 
     @Test
-    void validateColor_format() throws Exception {
+    void validateColor_format() {
         try {
-            Class<?> clazz = Class.forName(OrderService.class.getName());
-            Method validateColorMethod = clazz.getDeclaredMethod("validateColor", String.class);
-            validateColorMethod.setAccessible(true);
+            ReflectionTestUtils.invokeMethod(orderService, "validateColor", "12G345");
+        } catch (BizException bizException) {
+            Assertions.assertEquals("60005", bizException.getCode());
+        }
 
-            try {
-                validateColorMethod.invoke(orderService, "12345");
-            } catch (BizException bizException) {
-                Assertions.assertEquals("60005", bizException.getCode());
-            }
-        } catch (Exception e) {}
     }
 
     @Test
-    void convertColorObject2RGBString() throws Exception {
-        Class<?> clazz = Class.forName(OrderService.class.getName());
-        Method convertColorObject2RGBStringMethod = clazz.getDeclaredMethod("convertColorObject2RGBString", Color.class);
-        convertColorObject2RGBStringMethod.setAccessible(true);
-
+    void convertColorObject2RGBString() {
         Color color = Color.decode("#FFFF00");
-        Assertions.assertEquals("rgb(255, 255, 0)", convertColorObject2RGBStringMethod.invoke(orderService, color));
+        Assertions.assertEquals("rgb(255, 255, 0)",
+                ReflectionTestUtils.invokeMethod(orderService, "convertColorObject2RGBString", color));
     }
 
     @Test
-    void calcCostShipment() throws Exception {
-        Class<?> clazz = Class.forName(OrderService.class.getName());
-        Method calcCostShipmentMethod = clazz.getDeclaredMethod("calcCostShipment", BigDecimal.class, BigDecimal.class);
-        calcCostShipmentMethod.setAccessible(true);
-
-        Assertions.assertEquals(new BigDecimal("3.60"), calcCostShipmentMethod.invoke(orderService, new BigDecimal(2), new BigDecimal(1.8)));
+    void calcCostShipment() {
+        Assertions.assertEquals(new BigDecimal("3.60"),
+                ReflectionTestUtils.invokeMethod(orderService, "calcCostShipment", new BigDecimal(2), new BigDecimal(1.8)));
     }
+
 }
