@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -106,9 +107,9 @@ class OrderControllerTest {
                 orderAddDTOFake.getCountryNameDest(),
                 new BigDecimal(0.0));
 
-        Mockito.doReturn(0).when(orderService).placeAnOrder(orderFake);
+        Mockito.doReturn(orderFake).when(orderService).placeAnOrder(any());
 
-        Assertions.assertEquals(0, orderController.placeAnOrder(orderAddDTOFake).getResult());
+        Assertions.assertEquals(orderFake, orderController.placeAnOrder(orderAddDTOFake).getResult());
     }
 
     @Test
@@ -148,14 +149,14 @@ class OrderControllerTest {
         OrderAddDTO orderAddDTOFake = new OrderAddDTO(
                 "1abcd",
                 new BigDecimal(1.0),
-                "#FFFE30",
+                "",
                 "Sweden");
 
         mockMvc.perform(post("/express/placeanorder")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JSONObject.toJSONString(orderAddDTOFake)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(60004));
+                .andExpect(jsonPath("$.code").value(60007));
 
     }
 

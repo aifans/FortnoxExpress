@@ -3,6 +3,7 @@ package se.fortnox.codetest.fortnoxexpress.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
+import se.fortnox.codetest.fortnoxexpress.aspect.WebLog;
 import se.fortnox.codetest.fortnoxexpress.exception.ApiResult;
 import se.fortnox.codetest.fortnoxexpress.exception.BizException;
 import se.fortnox.codetest.fortnoxexpress.exception.ErrorEnum;
@@ -30,10 +31,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @WebLog(description = "require list all orders")
     @GetMapping(path = {"", "/", "/listorders"}, produces = "application/json")
     public ApiResult getAllOrders() {
-        logger.info("start to fetch all orders....");
-
         List<Order> orderList = this.orderService.getAllOrders();
 
         logger.debug("orders fetched: {}", orderList.toString());
@@ -42,9 +42,9 @@ public class OrderController {
         return ApiResult.success(orderDTOList);
     }
 
+    @WebLog(description = "require place an order")
     @PostMapping(path = "/placeanorder")
     public ApiResult placeAnOrder(@RequestBody OrderAddDTO orderAddDTO) {
-        logger.debug("new order: {}", orderAddDTO);
         Order order = this.convertOrderAddDTO2Order(orderAddDTO);
         return ApiResult.success(this.orderService.placeAnOrder(order));
     }
