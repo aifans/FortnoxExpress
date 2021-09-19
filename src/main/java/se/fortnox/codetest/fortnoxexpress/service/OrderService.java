@@ -53,7 +53,7 @@ public class OrderService implements IOrderService {
 
         int nret = this.orderDAO.placeAnOrder(order);
 
-        if (nret !=  0) {
+        if (nret !=  1) {
             logger.error("place order, save order to db error. retcode = {}", nret);
             order.setOrderId("");
         }
