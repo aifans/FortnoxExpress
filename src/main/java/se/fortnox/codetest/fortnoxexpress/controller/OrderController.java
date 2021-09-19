@@ -30,7 +30,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping(path = {"", "/", "/listboxes"}, produces = "application/json")
+    @GetMapping(path = {"", "/", "/listorders"}, produces = "application/json")
     public ApiResult getAllOrders() {
         logger.info("start to fetch all orders....");
 
@@ -42,8 +42,9 @@ public class OrderController {
         return ApiResult.success(orderDTOList);
     }
 
-    @PostMapping(path = "/addbox")
+    @PostMapping(path = "/placeanorder")
     public ApiResult placeAnOrder(@RequestBody OrderAddDTO orderAddDTO) {
+        logger.debug("new order: {}", orderAddDTO);
         Order order = this.convertOrderAddDTO2Order(orderAddDTO);
         return ApiResult.success(this.orderService.placeAnOrder(order));
     }

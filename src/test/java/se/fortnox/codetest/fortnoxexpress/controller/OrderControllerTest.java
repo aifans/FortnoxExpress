@@ -83,7 +83,7 @@ class OrderControllerTest {
         //Mockito.when(orderService.getAllOrders()).thenThrow(RuntimeException.class);
         Mockito.when(orderService.getAllOrders()).thenAnswer(I -> 1/0);
 
-        mockMvc.perform(get("/express/listboxes"))
+        mockMvc.perform(get("/express/listorders"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(500));
 
@@ -119,7 +119,7 @@ class OrderControllerTest {
                 "#FFFE00",
                 "Sweden");
 
-        mockMvc.perform(post("/express/addbox")
+        mockMvc.perform(post("/express/placeanorder")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSONObject.toJSONString(orderAddDTOFake)))
                 .andExpect(status().isOk())
@@ -135,7 +135,7 @@ class OrderControllerTest {
                 "#FFFE00",
                 "Sweden");
 
-        mockMvc.perform(post("/express/addbox")
+        mockMvc.perform(post("/express/placeanorder")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JSONObject.toJSONString(orderAddDTOFake)))
                 .andExpect(status().isOk())
@@ -151,7 +151,7 @@ class OrderControllerTest {
                 "#FFFE30",
                 "Sweden");
 
-        mockMvc.perform(post("/express/addbox")
+        mockMvc.perform(post("/express/placeanorder")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JSONObject.toJSONString(orderAddDTOFake)))
                 .andExpect(status().isOk())
@@ -167,7 +167,7 @@ class OrderControllerTest {
                 "#FFFE00",
                 "");
 
-        mockMvc.perform(post("/express/addbox")
+        mockMvc.perform(post("/express/placeanorder")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JSONObject.toJSONString(orderAddDTOFake)))
                 .andExpect(status().isOk())
