@@ -22,8 +22,14 @@ import java.util.List;
 public class ExpressController {
     private static final Logger logger = LoggerFactory.getLogger(ExpressController.class);
 
+    private final OrderController orderController;
+    private final CountryController countryController;
+
     @Autowired
-    private OrderController orderController;
+    public ExpressController(OrderController orderController, CountryController countryController) {
+        this.orderController = orderController;
+        this.countryController = countryController;
+    }
 
     @WebLog(description = "require list all orders")
     @GetMapping(path = {"", "/", "/listorders"}, produces = "application/json")
@@ -38,11 +44,11 @@ public class ExpressController {
         return this.orderController.placeAnOrder(orderAddDTO);
     }
 
-//    @WebLog(description = "require all country names")
-//    @GetMapping(path = "/getallcountrynames")
-//    public ApiResult getAllCountryNames() {
-//        return ApiResult.success();
-//    }
+    @WebLog(description = "require all country names")
+    @GetMapping(path = "/getallcountrynames")
+    public ApiResult getAllCountryNames() {
+        return this.countryController.getAllCountryNames();
+    }
 
 
 }

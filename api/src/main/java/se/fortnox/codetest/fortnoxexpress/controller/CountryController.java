@@ -3,6 +3,7 @@ package se.fortnox.codetest.fortnoxexpress.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import se.fortnox.codetest.fortnoxexpress.aspect.WebLog;
@@ -17,8 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping(path = "/express")
+@Component
 public class CountryController {
     private static final Logger logger = LoggerFactory.getLogger(CountryController.class);
 
@@ -29,8 +29,6 @@ public class CountryController {
         this.countryService = countryService;
     }
 
-    @WebLog(description = "require all country names")
-    @GetMapping(path = "/getallcountrynames")
     public ApiResult getAllCountryNames() {
 
         List<CountryMultiplier> countryList = this.countryService.getAllCountries();

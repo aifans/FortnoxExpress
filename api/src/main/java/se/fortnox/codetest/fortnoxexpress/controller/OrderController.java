@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-//@RestController
-//@RequestMapping(path = "/express")
 public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
@@ -34,8 +32,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-//    @WebLog(description = "require list all orders")
-//    @GetMapping(path = {"", "/", "/listorders"}, produces = "application/json")
     public ApiResult getAllOrders() {
         List<Order> orderList = this.orderService.getAllOrders();
 
@@ -45,8 +41,6 @@ public class OrderController {
         return ApiResult.success(orderDTOList);
     }
 
-//    @WebLog(description = "require a specified number of orders")
-//    @GetMapping(path = {"/orders/page"}, produces = "application/json")
     public ApiResult getOrders(int pageIdx, int quantity) {
         List<Order> orderList = this.orderService.getAllOrders();
 
@@ -56,9 +50,6 @@ public class OrderController {
         return ApiResult.success(orderDTOList);
     }
 
-//    @WebLog(description = "require place an order")
-//    @PostMapping(path = "/placeanorder")
-//    public ApiResult placeAnOrder(@RequestBody OrderAddDTO orderAddDTO) {
     public ApiResult placeAnOrder(OrderAddDTO orderAddDTO) {
         Order order = this.convertOrderAddDTO2Order(orderAddDTO);
         Order order2Add = this.orderService.placeAnOrder(order);
