@@ -2,6 +2,8 @@ package se.fortnox.codetest.fortnoxexpress.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.fortnox.codetest.fortnoxexpress.aspect.WebLog;
 import se.fortnox.codetest.fortnoxexpress.exception.ApiResult;
@@ -19,8 +21,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping(path = "/express")
+@Component
+//@RestController
+//@RequestMapping(path = "/express")
 public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
@@ -31,8 +34,8 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @WebLog(description = "require list all orders")
-    @GetMapping(path = {"", "/", "/listorders"}, produces = "application/json")
+//    @WebLog(description = "require list all orders")
+//    @GetMapping(path = {"", "/", "/listorders"}, produces = "application/json")
     public ApiResult getAllOrders() {
         List<Order> orderList = this.orderService.getAllOrders();
 
@@ -42,17 +45,28 @@ public class OrderController {
         return ApiResult.success(orderDTOList);
     }
 
-    @WebLog(description = "require place an order")
-    @PostMapping(path = "/placeanorder")
-    public ApiResult placeAnOrder(@RequestBody OrderAddDTO orderAddDTO) {
-        Order order = this.convertOrderAddDTO2Order(orderAddDTO);
-        return ApiResult.success(this.orderService.placeAnOrder(order));
+//    @WebLog(description = "require a specified number of orders")
+//    @GetMapping(path = {"/orders/page"}, produces = "application/json")
+    public ApiResult getOrders(int pageIdx, int quantity) {
+        List<Order> orderList = this.orderService.getAllOrders();
+
+        logger.debug("orders fetched: {}", orderList.toString());
+
+        List<OrderListDTO> orderDTOList = this.convertOrder2OrderListDTO(orderList);
+        return ApiResult.success(orderDTOList);
     }
 
-    @WebLog(description = "require all country names")
-    @GetMapping(path = "/getallcountrynames")
-    public ApiResult getAllCountryNames() {
-        return ApiResult.success();
+//    @WebLog(description = "require place an order")
+//    @PostMapping(path = "/placeanorder")
+//    public ApiResult placeAnOrder(@RequestBody OrderAddDTO orderAddDTO) {
+    public ApiResult placeAnOrder(OrderAddDTO orderAddDTO) {
+        Order order = this.convertOrderAddDTO2Order(orderAddDTO);
+        Order order2Add = this.orderService.placeAnOrder(order);
+        if (order2Add.getOrderId().isEmpty())
+            return ApiResult.error(ErrorEnum.PLACE_ORDER_FAILURE, order2Add);
+        else
+            return ApiResult.success(order2Add);
+
     }
 
     private List<OrderListDTO> convertOrder2OrderListDTO(List<Order> orderList) {

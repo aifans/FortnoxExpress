@@ -8,6 +8,8 @@ public enum ErrorEnum implements IErrorInfo {
 	INTERNAL_SERVER_ERROR("500", "Interal server error."),
 	SERVER_BUSY("503","Server is busy."),
 
+	PLACE_ORDER_FAILURE("200001", "Place an order failure."),
+
 	SELECT_FAILURE("50001", "Failed to fetch data from DB."),
 	INSERT_FAILURE("50002", "Failed to insert into DB."),
 	DELETE_FAILURE("50003", "Failed to delete from DB."),

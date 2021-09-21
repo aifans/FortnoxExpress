@@ -38,11 +38,27 @@ public class ApiResult {
 		return ar;
 	}
 
+	public static ApiResult error(IErrorInfo errorInfo, Object object) {
+		ApiResult ar = new ApiResult();
+		ar.setCode(errorInfo.getCode());
+		ar.setMessage(errorInfo.getMsg());
+		ar.setResult(object);
+		return ar;
+	}
+
 	public static ApiResult error(String code, String message) {
 		ApiResult ar = new ApiResult();
 		ar.setCode(code);
 		ar.setMessage(message);
 		ar.setResult(null);
+		return ar;
+	}
+
+	public static ApiResult error(String code, String message, Object data) {
+		ApiResult ar = new ApiResult();
+		ar.setCode(code);
+		ar.setMessage(message);
+		ar.setResult(data);
 		return ar;
 	}
 
