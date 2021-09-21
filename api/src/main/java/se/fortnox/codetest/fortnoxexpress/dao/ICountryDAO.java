@@ -9,4 +9,6 @@ import java.util.Map;
 
 public interface ICountryDAO {
     List<CountryMultiplier> getAllCountries();
+    List<Map<String, Object>> getCountryNameDest();
+    BigDecimal getCountryMultiplier(String countryNameDest);
 }

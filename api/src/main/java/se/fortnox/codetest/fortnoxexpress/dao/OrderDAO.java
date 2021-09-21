@@ -31,7 +31,7 @@ public class OrderDAO implements IOrderDAO {
     @Override
     public List<Order> getAllOrders() {
         try {
-            List<Map<String, Object>> orderMapList = this.db.queryForList("SELECT * FROM order_shipment");
+            List<Map<String, Object>> orderMapList = this.db.queryForList("SELECT * FROM order_shipment ORDER BY update_time, create_time DESC");
 
             logger.debug("data from db: {}", orderMapList.toString());
 
@@ -75,38 +75,7 @@ public class OrderDAO implements IOrderDAO {
         }
     }
 
-    @Override
-    public List<Map<String, Object>> getCountryNameDest() {
-        try {
-            String sql = "SELECT country_name_dest FROM country_multiplier";
 
-            List<Map<String, Object>> countryNameDest = this.db.queryForList(sql);
-
-            logger.info("fetch all country names from country_multiplier success.");
-            return countryNameDest;
-        } catch (Exception e) {
-            logger.error("read country_multiplier error: {}", e.getLocalizedMessage());
-            throw new BizException(ErrorEnum.SELECT_FAILURE);
-
-        }
-    }
-
-    @Override
-    public BigDecimal getCountryMultiplier(String countryNameDest) {
-
-        try {
-            String sql = "SELECT country_multiplier FROM country_multiplier WHERE country_name_dest = ?";
-
-            BigDecimal country_multiplier = this.db.queryForObject(sql, BigDecimal.class, countryNameDest);
-
-            logger.info("read multiplier from country_multiplier success.");
-            return country_multiplier;
-        } catch (Exception e) {
-            logger.error("read multiplier from country_multiplier error: {}", e.getLocalizedMessage());
-            throw new BizException(ErrorEnum.SELECT_FAILURE);
-
-        }
-    }
 
     private List<Order> convertOrderMap2Order(List<Map<String, Object>> orderMapList) {
 

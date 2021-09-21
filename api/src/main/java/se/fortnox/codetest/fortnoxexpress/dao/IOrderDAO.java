@@ -10,6 +10,5 @@ import java.util.Map;
 public interface IOrderDAO {
     List<Order> getAllOrders();
     int placeAnOrder(Order order);
-    List<Map<String, Object>> getCountryNameDest();
-    BigDecimal getCountryMultiplier(String countryNameDest);
+
 }

@@ -68,7 +68,7 @@ class OrderControllerTest {
 
         List<OrderListDTO> orderDTOList = new ArrayList<>();
         OrderListDTO orderListDTO = new OrderListDTO(
-                order.getId(),
+                order.getOrderId(),
                 order.getNameRecv(),
                 order.getWeightBox(),
                 order.getColorBox(),

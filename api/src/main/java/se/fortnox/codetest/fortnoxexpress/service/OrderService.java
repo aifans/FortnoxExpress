@@ -12,6 +12,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.util.StringUtils;
+import se.fortnox.codetest.fortnoxexpress.dao.ICountryDAO;
 import se.fortnox.codetest.fortnoxexpress.exception.BizException;
 import se.fortnox.codetest.fortnoxexpress.exception.ErrorEnum;
 import se.fortnox.codetest.fortnoxexpress.model.Order;
@@ -22,10 +23,12 @@ public class OrderService implements IOrderService {
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     private final IOrderDAO orderDAO;
+    private final ICountryDAO countryDAO;
 
     @Autowired
-    public OrderService(IOrderDAO orderDAO) {
+    public OrderService(IOrderDAO orderDAO, ICountryDAO countryDAO) {
         this.orderDAO = orderDAO;
+        this.countryDAO = countryDAO;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class OrderService implements IOrderService {
 
         order.setColorBox(this.convertColorObject2RGBString(Color.decode(order.getColorBox().trim())));
 
-        BigDecimal country_multiplier = this.orderDAO.getCountryMultiplier(order.getCountryNameDest());
+        BigDecimal country_multiplier = this.countryDAO.getCountryMultiplier(order.getCountryNameDest());
         order.setCostShipment(this.calcCostShipment(order.getWeightBox(), country_multiplier));
 
         logger.info("place order, generate order id...");

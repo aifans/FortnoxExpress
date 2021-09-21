@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.util.ReflectionTestUtils;
 import se.fortnox.codetest.fortnoxexpress.controller.OrderController;
+import se.fortnox.codetest.fortnoxexpress.dao.ICountryDAO;
 import se.fortnox.codetest.fortnoxexpress.dao.IOrderDAO;
 import se.fortnox.codetest.fortnoxexpress.exception.BizException;
 import se.fortnox.codetest.fortnoxexpress.model.Order;
@@ -27,6 +28,10 @@ class OrderServiceTest {
 
     @MockBean
     IOrderDAO orderDAO;
+
+    @MockBean
+    ICountryDAO countryDAO;
+
 
     @Autowired
     IOrderService orderService;
@@ -60,7 +65,7 @@ class OrderServiceTest {
                 "Sweden",
                 new BigDecimal(0.0));
 
-        Mockito.doReturn(new BigDecimal(5)).when(orderDAO).getCountryMultiplier(any());
+        Mockito.doReturn(new BigDecimal(5)).when(countryDAO).getCountryMultiplier(any());
         Mockito.doReturn(0).when(orderDAO).placeAnOrder(any());
 
         Order order = orderService.placeAnOrder(orderFake);
@@ -80,7 +85,7 @@ class OrderServiceTest {
                 "Sweden",
                 new BigDecimal(0.0));
 
-        Mockito.doReturn(new BigDecimal(5)).when(orderDAO).getCountryMultiplier(any());
+        Mockito.doReturn(new BigDecimal(5)).when(countryDAO).getCountryMultiplier(any());
         Mockito.doReturn(0).when(orderDAO).placeAnOrder(any());
 
         try {
