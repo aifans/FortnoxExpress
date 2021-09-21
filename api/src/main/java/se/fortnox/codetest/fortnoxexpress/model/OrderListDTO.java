@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class OrderListDTO {
 
-    private int id;
+    private String orderId;
     private String nameRecv;
     private BigDecimal weightBox;
     private String colorBox;

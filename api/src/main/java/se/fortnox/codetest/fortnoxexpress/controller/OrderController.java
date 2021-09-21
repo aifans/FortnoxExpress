@@ -66,7 +66,7 @@ public class OrderController {
         orderList.forEach(order -> {
             OrderListDTO orderListDTO = new OrderListDTO();
 
-            orderListDTO.setId(order.getId());
+            orderListDTO.setOrderId(order.getOrderId());
             orderListDTO.setNameRecv(order.getNameRecv());
             orderListDTO.setWeightBox(order.getWeightBox());
             orderListDTO.setColorBox(order.getColorBox());
