@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Noto Sans JP';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosansjp/v36/-F62fjtqLzI2JPCgQBnw7HFowA.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Noto Sans JP';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosansjp/v36/-F6pfjtqLzI2JPCgQBnw7HFQei0q1A.otf) format('opentype');
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: #ffffff;
+}
+body {
+  margin: 2em 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+a {
+  color: #000000;
+}
+a:visited {
+  color: #e50e0e;
+}
+.main-heading {
+  font-weight: bold;
+  font-size: 48px;
+  text-align: center;
+}
+.loader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/*# sourceMappingURL=App.css.map */
