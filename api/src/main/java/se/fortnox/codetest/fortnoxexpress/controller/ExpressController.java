@@ -1,5 +1,7 @@
 package se.fortnox.codetest.fortnoxexpress.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import se.fortnox.codetest.fortnoxexpress.service.IOrderService;
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(tags = "express")
 @RestController
 @RequestMapping(path = "/express")
 public class ExpressController {
@@ -31,12 +34,14 @@ public class ExpressController {
         this.countryController = countryController;
     }
 
+    @ApiOperation("list all orders")
     @WebLog(description = "require list all orders")
     @GetMapping(path = {"", "/", "/listorders"}, produces = "application/json")
     public ApiResult getAllOrders() {
         return this.orderController.getAllOrders();
     }
 
+    @ApiOperation("place an order")
     @WebLog(description = "require place an order")
     @PostMapping(path = "/placeanorder")
     public ApiResult placeAnOrder(@RequestBody OrderAddDTO orderAddDTO) {
@@ -44,6 +49,7 @@ public class ExpressController {
         return this.orderController.placeAnOrder(orderAddDTO);
     }
 
+    @ApiOperation("get all country names")
     @WebLog(description = "require all country names")
     @GetMapping(path = "/getallcountrynames")
     public ApiResult getAllCountryNames() {

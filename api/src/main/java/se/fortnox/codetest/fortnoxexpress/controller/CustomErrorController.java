@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import se.fortnox.codetest.fortnoxexpress.aspect.WebLog;
 import se.fortnox.codetest.fortnoxexpress.exception.BizException;
 import se.fortnox.codetest.fortnoxexpress.exception.ErrorEnum;
+import springfox.documentation.annotations.ApiIgnore;
 
+@ApiIgnore
 @Controller
 @RequestMapping("${server.error.path:${error.path:/error}}")
 public class CustomErrorController implements ErrorController {
