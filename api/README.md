@@ -13,6 +13,11 @@ The project uses Maven as build tool. You can also use the IDE such like Intelli
     - Replace the db settings as necessary
 - The API should now be running on localhost:8070
 
+*API doc*
+- http://localhost:8070/doc.html
+- Navigate to src/main/resources/application.properties
+  - set knife4j.production=true to disable in production enviroment
+
 *@WebLog*
 
 - The API controller methods decorated by this annotation will print the detailed information of the call. It only takes effect in dev and test environments.
